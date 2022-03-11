@@ -8,6 +8,9 @@ From: ubuntu:20.04
 %files
 	./mitsuba.conf /root/
 
+%setup
+	mkdir $SINGULARITY_ROOTFS/usr/local/cuda
+
 %post
 	# prepare package installation (container specific)
 	export DEBIAN_FRONTEND=noninteractive
@@ -17,12 +20,13 @@ From: ubuntu:20.04
 	# install mitsuba
 	# https://mitsuba2.readthedocs.io/en/latest/src/getting_started/compiling.html#linux
 	apt-get install -y -q --no-install-recommends \
-		clang-9 libc++-9-dev libc++abi-9-dev cmake ninja-build \
+		gcc g++ clang-9 libc++-9-dev libc++abi-9-dev cmake ninja-build \
 		libz-dev libpng-dev libjpeg-dev libxrandr-dev libxinerama-dev libxcursor-dev \
 		python3-dev python3-distutils python3-setuptools
 	mkdir /mitsuba2 && git clone --depth 1 --recursive https://github.com/mitsuba-renderer/mitsuba2.git /mitsuba2
 	cd /mitsuba2 && mv /root/mitsuba.conf /mitsuba2/
 	export CC=clang-9 CXX=clang++-9
+	export CUDACXX=/usr/local/cuda/bin/nvcc
 	cd /mitsuba2 && mkdir build && cd build && cmake -GNinja .. && ninja
 
 %runscript

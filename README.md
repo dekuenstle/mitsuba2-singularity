@@ -40,11 +40,14 @@ singualarity build --sandbox --fakeroot mitsuba2-sandbox mitsuba2.def
 singularity shell --writable mitsuba2-sandbox
 ```
 
-## CPU vs GPU
-Currently, the container supports just CPU variants of mitsuba2. 
+## GPU variants
 
-Running GPU variants would require the following modifications of the container definition.
-Use an cuda base image (i.e. `nvidia/cuda:<version>-devel-ubuntu20.04`) instead of ubuntu, add gpu variants to the `mitsuba.conf` file, and download and install Nividia OptiX. Pull-requests are welcome 😄
+Using the GPU variants requires CUDA and Nvidia OptiX, that should be already installed
+on the host system. Then we can bind the cuda binaries to singularity:
+
+```
+singularity build --fakeroot --nv --bind /usr/local/cuda mitsuba2.sif mitsuba2.def
+```
 
 ## Licence
 
