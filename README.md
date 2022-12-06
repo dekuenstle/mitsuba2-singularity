@@ -1,6 +1,7 @@
 # mitsuba2-singularity
-Install the Mitsuba2 renderer into a singularity container to render images on compute clusters.
+Installs the Mitsuba2 renderer into a singularity container to render images on compute clusters.
 
+> :warning: mitsuba2 is outdated; use [mitsuba3](https://mitsuba.readthedocs.io/en/stable/) instead. Mitsuba3 is easily installed with `pip install mitsuba` so that there is no need for a build script for singularity (like this). 
 
 ## Using mitsuba2 in a container
 
